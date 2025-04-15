@@ -46,14 +46,76 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="frmCategorie.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="frmCategorie.Designer.cs">
+      <DependentUpon>frmCategorie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmClothes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmClothes.Designer.cs">
+      <DependentUpon>frmClothes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmDashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDashboard.Designer.cs">
+      <DependentUpon>frmDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLenders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLenders.Designer.cs">
+      <DependentUpon>frmLenders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmOrders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOrders.Designer.cs">
+      <DependentUpon>frmOrders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmRenters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRenters.Designer.cs">
+      <DependentUpon>frmRenters.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="frmCategorie.resx">
+      <DependentUpon>frmCategorie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmClothes.resx">
+      <DependentUpon>frmClothes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDashboard.resx">
+      <DependentUpon>frmDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLenders.resx">
+      <DependentUpon>frmLenders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOrders.resx">
+      <DependentUpon>frmOrders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRenters.resx">
+      <DependentUpon>frmRenters.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,7 +124,12 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Resource1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -75,6 +142,81 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eye_open.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\hide.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\visible.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\categories.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\clothes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\dashboard %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\design-das-modified.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\Logo4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\orders.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\renter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\renters.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\Sidebar2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\TopBar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SidePanel3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\logout1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\logout %282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\logout2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
