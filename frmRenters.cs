@@ -123,7 +123,7 @@ namespace EDP_WinProject102__WearRent_
 
         private void button8_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show(
+            DialogResult result = MessageBox.Show( 
                 "Are you sure you want to logout?",
                 "Logout Confirmation",
                 MessageBoxButtons.YesNo,
