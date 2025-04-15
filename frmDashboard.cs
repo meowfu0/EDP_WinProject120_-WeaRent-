@@ -37,9 +37,10 @@ namespace EDP_WinProject102__WearRent_
 
             if (result == DialogResult.Yes)
             {
-                this.Close(); // Proceed to close
+                frmLogin loginForm = new frmLogin();
+                loginForm.Show();
+                this.Hide();
             }
-            // If No is clicked, nothing happens
         }
 
         private void label1_Click(object sender, EventArgs e)

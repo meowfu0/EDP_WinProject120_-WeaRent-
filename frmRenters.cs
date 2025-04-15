@@ -34,7 +34,18 @@ namespace EDP_WinProject102__WearRent_
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
-            this.Close();
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to close?",
+                "Confirm Exit",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                frmLogin loginForm = new frmLogin();
+                loginForm.Show();
+                this.Hide();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
