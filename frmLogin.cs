@@ -152,6 +152,11 @@ namespace EDP_WinProject102__WearRent_
                 this.Close();
             }
         }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

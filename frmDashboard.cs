@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -24,6 +25,8 @@ namespace EDP_WinProject102__WearRent_
 
         private void frmDashboard_Load(object sender, EventArgs e)
         {
+            timer1.Start();
+            label1.Text = DateTime.Now.ToString("dddd, dd/MM/yyyy");
 
         }
 
@@ -294,6 +297,11 @@ namespace EDP_WinProject102__WearRent_
         private void button8_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            label1.Text = DateTime.Now.ToString("dddd, dd/MM/yyyy");
         }
     }
 }

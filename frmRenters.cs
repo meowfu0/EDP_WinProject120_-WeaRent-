@@ -16,11 +16,12 @@ namespace EDP_WinProject102__WearRent_
         {
             InitializeComponent();
         }
-
         private void frmRenters_Load(object sender, EventArgs e)
         {
-
+            timer1.Start();
+            label5.Text = DateTime.Now.ToString("dddd, dd/MM/yyyy");
         }
+
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
@@ -162,6 +163,36 @@ namespace EDP_WinProject102__WearRent_
                 loginForm.Show();
                 this.Hide();
             }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            label5.Text = DateTime.Now.ToString("dddd, dd/MM/yyyy");
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

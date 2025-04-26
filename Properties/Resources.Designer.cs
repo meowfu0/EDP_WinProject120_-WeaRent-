@@ -123,6 +123,16 @@ namespace EDP_WinProject102__WearRent_.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap back {
+            get {
+                object obj = ResourceManager.GetObject("back", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap categories {
             get {
                 object obj = ResourceManager.GetObject("categories", resourceCulture);
@@ -176,6 +186,16 @@ namespace EDP_WinProject102__WearRent_.Properties {
         internal static System.Drawing.Bitmap eye_open {
             get {
                 object obj = ResourceManager.GetObject("eye_open", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap frgpass {
+            get {
+                object obj = ResourceManager.GetObject("frgpass", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

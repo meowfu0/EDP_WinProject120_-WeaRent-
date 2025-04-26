@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
             this.pictureBox18 = new System.Windows.Forms.PictureBox();
@@ -56,6 +57,7 @@
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).BeginInit();
@@ -359,6 +361,7 @@
             this.label1.Size = new System.Drawing.Size(133, 17);
             this.label1.TabIndex = 18;
             this.label1.Text = "Monday, 14/04/2025";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // pictureBox4
             // 
@@ -393,6 +396,12 @@
             this.pictureBox2.TabIndex = 17;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.frmLenders_Load);
             // 
             // frmLenders
             // 
@@ -466,5 +475,6 @@
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.PictureBox pictureBox18;
         private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Timer timer1;
     }
 }
