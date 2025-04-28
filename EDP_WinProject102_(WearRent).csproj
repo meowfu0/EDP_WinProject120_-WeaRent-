@@ -94,6 +94,18 @@
     <Compile Include="frmRenters.Designer.cs">
       <DependentUpon>frmRenters.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmSetCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSetCode.Designer.cs">
+      <DependentUpon>frmSetCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSetNewPass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSetNewPass.Designer.cs">
+      <DependentUpon>frmSetNewPass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource1.Designer.cs">
@@ -124,6 +136,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmRenters.resx">
       <DependentUpon>frmRenters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSetCode.resx">
+      <DependentUpon>frmSetCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSetNewPass.resx">
+      <DependentUpon>frmSetNewPass.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -232,6 +250,60 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="images\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\pinCode.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\setnewpass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\dash1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\dash2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\categories1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\clothes1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\logout3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\orders1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\renter1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\renters2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\categories2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\clothes2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\lenders.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\logout4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\orders2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\renters3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\das-top bar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\das-top bar-modified.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

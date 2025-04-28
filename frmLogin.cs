@@ -155,8 +155,11 @@ namespace EDP_WinProject102__WearRent_
 
         private void label4_Click(object sender, EventArgs e)
         {
-
+            frmForgotPassword forgotPasswordForm = new frmForgotPassword();
+            forgotPasswordForm.Show();
+            this.Hide();
         }
+
     }
 }
 

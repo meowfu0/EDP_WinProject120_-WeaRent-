@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace EDP_WinProject102__WearRent_
 {
-    public partial class frmForgotPassword : Form
+    public partial class frmSetCode : Form
     {
-        public frmForgotPassword()
+        public frmSetCode()
         {
             InitializeComponent();
         }
 
-        private void frmForgotPassword_Load(object sender, EventArgs e)
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
@@ -36,39 +36,24 @@ namespace EDP_WinProject102__WearRent_
             }
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void pictureBox3_Click(object sender, EventArgs e)
         {
-            frmLogin loginForm = new frmLogin();
-            loginForm.Show();
+            frmForgotPassword forgotPasswordForm = new frmForgotPassword();
+            forgotPasswordForm.Show();
             this.Hide();
         }
 
         private void label4_Click(object sender, EventArgs e)
         {
-            frmLogin loginForm = new frmLogin();
-            loginForm.Show();
-            this.Hide();
+            frmForgotPassword forgotPasswordForm = new frmForgotPassword();
+            forgotPasswordForm.Show();
+            this.Hide(); 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            frmSetCode setCodeForm = new frmSetCode();
-            setCodeForm.Show();
+            frmSetNewPass setNewPassForm = new frmSetNewPass();
+            setNewPassForm.Show();
             this.Hide();
         }
     }
