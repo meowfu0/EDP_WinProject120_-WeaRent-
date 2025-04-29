@@ -58,6 +58,12 @@
     <Compile Include="frmClothes.Designer.cs">
       <DependentUpon>frmClothes.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmCreateAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCreateAccount.Designer.cs">
+      <DependentUpon>frmCreateAccount.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmClothes.resx">
       <DependentUpon>frmClothes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCreateAccount.resx">
+      <DependentUpon>frmCreateAccount.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDashboard.resx">
       <DependentUpon>frmDashboard.cs</DependentUpon>
@@ -304,6 +313,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="images\das-top bar-modified.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\createAcc.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

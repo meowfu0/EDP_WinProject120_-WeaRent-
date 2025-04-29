@@ -73,7 +73,7 @@
             this.label4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(51)))));
-            this.label4.Location = new System.Drawing.Point(582, 388);
+            this.label4.Location = new System.Drawing.Point(582, 369);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(95, 17);
             this.label4.TabIndex = 13;
@@ -85,7 +85,7 @@
             this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox3.Image = global::EDP_WinProject102__WearRent_.Properties.Resources.back;
             this.pictureBox3.InitialImage = null;
-            this.pictureBox3.Location = new System.Drawing.Point(544, 385);
+            this.pictureBox3.Location = new System.Drawing.Point(544, 366);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(42, 25);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -98,7 +98,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(51)))));
-            this.label3.Location = new System.Drawing.Point(515, 426);
+            this.label3.Location = new System.Drawing.Point(515, 407);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(212, 17);
             this.label3.TabIndex = 11;
@@ -111,7 +111,7 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(484, 318);
+            this.button1.Location = new System.Drawing.Point(484, 299);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(269, 35);
             this.button1.TabIndex = 9;
@@ -124,7 +124,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(51)))));
-            this.label2.Location = new System.Drawing.Point(481, 243);
+            this.label2.Location = new System.Drawing.Point(481, 224);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(42, 17);
             this.label2.TabIndex = 6;
@@ -134,7 +134,7 @@
             // 
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(484, 269);
+            this.textBox1.Location = new System.Drawing.Point(484, 250);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(269, 32);
@@ -145,7 +145,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(51)))));
-            this.label1.Location = new System.Drawing.Point(497, 214);
+            this.label1.Location = new System.Drawing.Point(497, 195);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(240, 15);
             this.label1.TabIndex = 5;
@@ -155,7 +155,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = global::EDP_WinProject102__WearRent_.Properties.Resources.Logo4;
-            this.pictureBox2.Location = new System.Drawing.Point(484, 105);
+            this.pictureBox2.Location = new System.Drawing.Point(484, 86);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(269, 106);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;

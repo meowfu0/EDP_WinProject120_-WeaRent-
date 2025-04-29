@@ -160,6 +160,13 @@ namespace EDP_WinProject102__WearRent_
             this.Hide();
         }
 
+        private void label5_Click(object sender, EventArgs e)
+        {
+            frmCreateAccount createAccountForm = new frmCreateAccount();
+            createAccountForm.Show();
+            this.Hide(); 
+        }
+
     }
 }
 

@@ -193,6 +193,16 @@ namespace EDP_WinProject102__WearRent_.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap createAcc {
+            get {
+                object obj = ResourceManager.GetObject("createAcc", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap das_top_bar {
             get {
                 object obj = ResourceManager.GetObject("das_top_bar", resourceCulture);
