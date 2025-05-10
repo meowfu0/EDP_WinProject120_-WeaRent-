@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 
 namespace EDP_WinProject102__WearRent_
@@ -105,32 +106,76 @@ namespace EDP_WinProject102__WearRent_
         {
            
         }
-
         private void btnSignIn_Click(object sender, EventArgs e)
         {
-            string username = textBox1.Text;
-            string password = textBox2.Text;
+            string username = textBox1.Text;  // Email or Phone
+            string password = textBox2.Text;  // Password
 
-            // Simulate successful login
-            DialogResult result;
-
-            if (chkRememberMe.Checked)
+            // Check if both fields are filled in
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                result = MessageBox.Show("Login with Remember Me checked.", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                result = MessageBox.Show("Login without remembering.", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Please enter both email/phone number and password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
-            if (result == DialogResult.OK)
+            // SQL query to check if the user exists based on email or phone number
+            string query = "SELECT password_hash FROM users WHERE email_address = @username OR phone_number = @username";
+            DatabaseConnection db = new DatabaseConnection();
+
+            try
             {
-                frmDashboard dashboard = new frmDashboard();
-                dashboard.Show();
-                this.Hide();
+                // Create a MySqlCommand object
+                MySqlCommand cmd = new MySqlCommand(query);
+                cmd.Parameters.AddWithValue("@username", username);  // Add the parameter for email/phone
+
+                // Pass the MySqlCommand object to ExecuteSelectQuery method
+                MySqlDataReader reader = db.ExecuteSelectQuery(cmd);
+
+                // Check if the user exists
+                if (reader != null && reader.HasRows)
+                {
+                    reader.Read();  // Read the first (and only) row
+                    string storedPasswordHash = reader["password_hash"].ToString();  // Retrieve the stored hashed password
+
+                    // Check if the entered password matches the stored hash using BCrypt
+                    if (BCrypt.Net.BCrypt.Verify(password, storedPasswordHash))
+                    {
+                        // If the password matches, login is successful
+                        DialogResult result;
+                        if (chkRememberMe.Checked)
+                        {
+                            result = MessageBox.Show("Login with Remember Me checked.", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            result = MessageBox.Show("Login without remembering.", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+
+                        if (result == DialogResult.OK)
+                        {
+                            // Open the Dashboard
+                            frmDashboard dashboard = new frmDashboard();
+                            dashboard.Show();
+                            this.Hide(); // Hide current form
+                        }
+                    }
+                    else
+                    {
+                        // Incorrect password
+                        MessageBox.Show("Invalid password. Please try again.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    // No user found with the provided email or phone number
+                    MessageBox.Show("No account found with that email or phone number. Please create an account.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
 
 
         private void label3_Click(object sender, EventArgs e)

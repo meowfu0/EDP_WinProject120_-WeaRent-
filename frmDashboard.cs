@@ -248,8 +248,11 @@ namespace EDP_WinProject102__WearRent_
 
         private void button7_Click(object sender, EventArgs e)
         {
-
+            frmOrders ordersForm = new frmOrders();
+            ordersForm.Show();
+            this.Hide();  
         }
+
 
         private void pictureBox8_Click(object sender, EventArgs e)
         {
