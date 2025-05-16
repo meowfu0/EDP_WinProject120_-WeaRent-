@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Office.Interop.Excel;
+using MySql.Data.MySqlClient;
 
 namespace EDP_WinProject102__WearRent_
 {
@@ -18,10 +22,97 @@ namespace EDP_WinProject102__WearRent_
             InitializeComponent();
         }
 
+        private void frmLenders_Load(object sender, EventArgs e)
+        {
+            // Ensure that the cell content click event handler is set
+            dataGridView1.CellContentClick -= dataGridView1_CellContentClick;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+
+            LoadLendersData();
+            CustomizeDataGridView();
+            AddActionButtonsToDataGridView();
+            timer1.Start();
+            label1.Text = DateTime.Now.ToString("dddd, dd/MM/yyyy");
+        }
+        private void AddActionButtonsToDataGridView()
+        {
+            if (dataGridView1.Columns["Edit"] == null)
+            {
+                DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn
+                {
+                    Name = "Edit",
+                    HeaderText = "Edit",
+                    Text = "Edit",
+                    UseColumnTextForButtonValue = true,
+                    FlatStyle = FlatStyle.Flat
+                };
+                dataGridView1.Columns.Add(editButtonColumn);
+            }
+            if (dataGridView1.Columns["Delete"] == null)
+            {
+                DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn
+                {
+                    Name = "Delete",
+                    HeaderText = "Delete",
+                    Text = "Delete",
+                    UseColumnTextForButtonValue = true,
+                    FlatStyle = FlatStyle.Flat
+                };
+                dataGridView1.Columns.Add(deleteButtonColumn);
+            }
+        }
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }
+        private void CustomizeDataGridView()
+        {
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
+
+            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.LightBlue;
+            dataGridView1.DefaultCellStyle.SelectionForeColor = Color.Black;
+
+            dataGridView1.ClearSelection();
+        }
+
+        private void LoadLendersData(string searchKeyword = "")
+        {
+            string query = "SELECT lenders_name, email_address, phone_number, address FROM lenders WHERE deleted_at IS NULL";
+            if (!string.IsNullOrEmpty(searchKeyword))
+            {
+                query += " AND (lenders_name LIKE @search OR email_address LIKE @search OR phone_number LIKE @search OR address LIKE @search)";
+            }
+
+            DatabaseConnection db = new DatabaseConnection();
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@search", "%" + searchKeyword + "%");
+
+            try
+            {
+                MySqlDataReader reader = db.ExecuteSelectQuery(cmd);
+                dataGridView1.Rows.Clear();
+                while (reader.Read())
+                {
+                    dataGridView1.Rows.Add(
+                        reader["lenders_name"].ToString(),
+                        reader["email_address"].ToString(),
+                        reader["phone_number"].ToString(),
+                        reader["address"].ToString()
+                    );
+                }
+                AddActionButtonsToDataGridView();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading lenders data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
@@ -33,13 +124,6 @@ namespace EDP_WinProject102__WearRent_
             frmDashboard dashboard = new frmDashboard();
             dashboard.Show();
             this.Hide();
-        }
-
-        private void frmLenders_Load(object sender, EventArgs e)
-        {
-            timer1.Start();
-            label1.Text = DateTime.Now.ToString("dddd, dd/MM/yyyy");
-
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)
@@ -176,10 +260,167 @@ namespace EDP_WinProject102__WearRent_
         {
 
         }
-
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0) // Ensure it's not a header row
+            {
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "Edit")
+                {
+                    // Retrieve data from the selected row
+                    string lendersName = dataGridView1.Rows[e.RowIndex].Cells["colLenderName"].Value.ToString();
+                    string emailAddress = dataGridView1.Rows[e.RowIndex].Cells["colEmail"].Value.ToString();
+                    string phoneNumber = dataGridView1.Rows[e.RowIndex].Cells["colPhone"].Value.ToString();
+                    string address = dataGridView1.Rows[e.RowIndex].Cells["colAddress"].Value.ToString();
+
+                    // Create a new instance of frmEditLender and pass the data to its constructor
+                    frmEditLender editLenderForm = new frmEditLender(lendersName, emailAddress, phoneNumber, address);
+                    editLenderForm.StartPosition = FormStartPosition.CenterScreen; // Center the form
+                    editLenderForm.Show();
+                }
+
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "Delete")
+                {
+                    if (dataGridView1.Rows[e.RowIndex].Cells["colEmail"].Value != null)
+                    {
+                        string emailAddress = dataGridView1.Rows[e.RowIndex].Cells["colEmail"].Value.ToString();
+                        DialogResult result = MessageBox.Show("Are you sure you want to delete this lender?",
+                                                              "Confirm Delete",
+                                                              MessageBoxButtons.YesNo,
+                                                              MessageBoxIcon.Question);
+                        if (result == DialogResult.Yes)
+                        {
+                            PerformSoftDelete(emailAddress, e.RowIndex);
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void PerformSoftDelete(string emailAddress, int rowIndex)
+        {
+            string query = "UPDATE lenders SET deleted_at = @deleted_at WHERE email_address = @email";
+            DatabaseConnection db = new DatabaseConnection();
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@email", emailAddress);
+            cmd.Parameters.AddWithValue("@deleted_at", DateTime.Now);
+
+            try
+            {
+                db.ExecuteQuery(cmd);
+                dataGridView1.Rows.RemoveAt(rowIndex);  // Remove the row from the DataGridView
+                MessageBox.Show("Lender deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadLendersData();  // Reload the lenders data after deletion
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error deleting lender: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void button9_Click(object sender, EventArgs e)
+        {
+            // Open the form to add a lender
+            frmAddLenders addLenderForm = new frmAddLenders();
+            addLenderForm.ShowDialog();
+
+            // Reload the lender data to reflect the newly added lender
+            LoadLendersData();
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Refreshing data, please wait...", "Refreshing", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            MessageBox.Show("Data refreshed successfully!", "Completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            ExportToExistingExcel();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
         {
 
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            string searchKeyword = textBox1.Text.Trim();
+            LoadLendersData(searchKeyword);  
+        }
+        private void ExportToExistingExcel()
+        {
+            // Set the folder and image path for Lenders
+            string lendersDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "LendersData");
+            string filePath = Path.Combine(lendersDataFolder, "LendersTemplate.xlsx");
+            string imagePath = Path.Combine(lendersDataFolder, "image1.png");
+
+            // Check if the image file exists
+            if (!File.Exists(imagePath))
+            {
+                MessageBox.Show("Image file not found: " + imagePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;  // Stop further execution if the image file doesn't exist
+            }
+
+            // Start Excel application
+            Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+            excelApp.Visible = true;
+
+            Workbook workbook = excelApp.Workbooks.Open(filePath);
+            Worksheet worksheet = workbook.Sheets[1];  // Select the first sheet
+
+            // Get the range where the picture will be placed
+            Range mergedRange = worksheet.Range["A1:B5"];
+            double top = mergedRange.Top;
+            double left = mergedRange.Left;
+            double width = mergedRange.Width;
+            double height = mergedRange.Height;
+
+            // Add the image to the worksheet
+            try
+            {
+                worksheet.Shapes.AddPicture(imagePath,
+                    Microsoft.Office.Core.MsoTriState.msoFalse,
+                    Microsoft.Office.Core.MsoTriState.msoCTrue,
+                    (float)left, (float)top, (float)width, (float)height);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding image: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;  // Stop further execution if there's an error adding the image
+            }
+
+            // Write the data from DataGridView into the worksheet
+            int row = 6;
+            foreach (DataGridViewRow dgvRow in dataGridView1.Rows)
+            {
+                if (dgvRow.IsNewRow) continue;  // Skip the new row if present
+
+                worksheet.Cells[row, 3].Value = dgvRow.Cells["colLenderName"].Value.ToString();
+                worksheet.Cells[row, 4].Value = dgvRow.Cells["colEmail"].Value.ToString();
+                worksheet.Cells[row, 5].Value = dgvRow.Cells["colPhone"].Value.ToString();
+                worksheet.Cells[row, 6].Value = dgvRow.Cells["colAddress"].Value.ToString();
+                row++;
+            }
+
+            // Save the workbook
+            workbook.Save();
+
+            // Inform the user that the export is complete
+            MessageBox.Show("Lenders data has been exported to the existing Excel file!", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Cleanup
+            excelApp.Quit();
+            Marshal.ReleaseComObject(worksheet);
+            Marshal.ReleaseComObject(workbook);
+            Marshal.ReleaseComObject(excelApp);
+        }
+
+
     }
 }

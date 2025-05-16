@@ -175,7 +175,6 @@
             this.button9.Size = new System.Drawing.Size(103, 32);
             this.button9.TabIndex = 28;
             this.button9.Text = "Cancel";
-            this.button9.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button9.UseVisualStyleBackColor = false;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
