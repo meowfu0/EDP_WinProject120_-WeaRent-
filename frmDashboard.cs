@@ -26,6 +26,8 @@ namespace EDP_WinProject102__WearRent_
 
         private void frmDashboard_Load(object sender, EventArgs e)
         {
+            LoadTotalUsersCount();
+            LoadTotalLendersCount();
             LoadTotalRentersCount();
             timer1.Start();
             label1.Text = DateTime.Now.ToString("dddd, dd/MM/yyyy");
@@ -337,6 +339,69 @@ namespace EDP_WinProject102__WearRent_
                 MessageBox.Show("Failed to load renters count: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 label3.Text = "0";
             }
+        }
+
+        private void LoadTotalLendersCount()
+        {
+            string query = "SELECT COUNT(*) FROM lenders WHERE deleted_at IS NULL"; // assuming you also have soft delete
+            DatabaseConnection db = new DatabaseConnection();
+            MySqlCommand cmd = new MySqlCommand(query);
+
+            try
+            {
+                object result = db.ExecuteScalarQuery(cmd);
+                int count = 0;
+                if (result != null && int.TryParse(result.ToString(), out count))
+                {
+                    label4.Text = count.ToString();
+                }
+                else
+                {
+                    label4.Text = "0";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to load lenders count: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                label4.Text = "0";
+            }
+        }
+        private void LoadTotalUsersCount()
+        {
+            string query = "SELECT COUNT(*) FROM users WHERE deleted_at IS NULL"; // Adjust if no soft delete
+            DatabaseConnection db = new DatabaseConnection();
+            MySqlCommand cmd = new MySqlCommand(query);
+
+            try
+            {
+                object result = db.ExecuteScalarQuery(cmd);
+                int count = 0;
+                if (result != null && int.TryParse(result.ToString(), out count))
+                {
+                    label5.Text = count.ToString();
+                }
+                else
+                {
+                    label5.Text = "0";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to load users count: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                label5.Text = "0";
+            }
+        }
+
+
+
+        private void label4_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click_1(object sender, EventArgs e)
+        {
+
         }
 
     }
