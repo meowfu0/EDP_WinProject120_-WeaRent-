@@ -61,6 +61,22 @@ namespace EDP_WinProject102__WearRent_
                 Console.WriteLine("Error: " + ex.Message);
             }
         }
+        public object ExecuteScalarQuery(MySqlCommand cmd)
+        {
+            object result = null;
+            try
+            {
+                OpenConnection();
+                cmd.Connection = connection;
+                result = cmd.ExecuteScalar();
+                CloseConnection();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+            return result;
+        }
 
 
         public MySqlDataReader ExecuteSelectQuery(MySqlCommand cmd)
