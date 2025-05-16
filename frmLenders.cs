@@ -176,5 +176,10 @@ namespace EDP_WinProject102__WearRent_
         {
 
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
