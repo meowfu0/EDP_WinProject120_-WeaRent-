@@ -24,7 +24,6 @@ namespace EDP_WinProject102__WearRent_
 
         private void frmLenders_Load(object sender, EventArgs e)
         {
-            // Ensure that the cell content click event handler is set
             dataGridView1.CellContentClick -= dataGridView1_CellContentClick;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
 

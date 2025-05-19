@@ -524,7 +524,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.White;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(51)))));
+            this.label3.ForeColor = System.Drawing.Color.SteelBlue;
             this.label3.Location = new System.Drawing.Point(510, 298);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(46, 54);
@@ -537,7 +537,7 @@
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.White;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(51)))));
+            this.label4.ForeColor = System.Drawing.Color.SteelBlue;
             this.label4.Location = new System.Drawing.Point(778, 297);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(46, 54);
@@ -550,7 +550,7 @@
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.White;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(51)))));
+            this.label5.ForeColor = System.Drawing.Color.SteelBlue;
             this.label5.Location = new System.Drawing.Point(1052, 298);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(46, 54);
