@@ -27,8 +27,10 @@ namespace EDP_WinProject102__WearRent_
         private void frmDashboard_Load(object sender, EventArgs e)
         {
             LoadTotalUsersCount();
+            LoadTotalClothesCount();
             LoadTotalLendersCount();
             LoadTotalRentersCount();
+            LoadTotalCategoriesCount();
             timer1.Start();
             label1.Text = DateTime.Now.ToString("dddd, dd/MM/yyyy");
 
@@ -256,6 +258,60 @@ namespace EDP_WinProject102__WearRent_
             ordersForm.Show();
             this.Hide();  
         }
+
+        private void LoadTotalClothesCount()
+        {
+            string query = "SELECT COUNT(*) FROM clothes WHERE deleted_at IS NULL";
+            DatabaseConnection db = new DatabaseConnection();
+            MySqlCommand cmd = new MySqlCommand(query);
+
+            try
+            {
+                object result = db.ExecuteScalarQuery(cmd);
+                int count = 0;
+                if (result != null && int.TryParse(result.ToString(), out count))
+                {
+                    label6.Text = count.ToString(); 
+                }
+                else
+                {
+                    label6.Text = "0";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to load clothes count: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                label6.Text = "0";
+            }
+        }
+
+        private void LoadTotalCategoriesCount()
+        {
+            string query = "SELECT COUNT(*) FROM categories WHERE deleted_at IS NULL";
+            DatabaseConnection db = new DatabaseConnection();
+            MySqlCommand cmd = new MySqlCommand(query);
+
+            try
+            {
+                object result = db.ExecuteScalarQuery(cmd);
+                int count = 0;
+                if (result != null && int.TryParse(result.ToString(), out count))
+                {
+                    label7.Text = count.ToString(); 
+                }
+                else
+                {
+                    label7.Text = "0";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to load categories count: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                label7.Text = "0";
+            }
+        }
+
+
 
 
         private void pictureBox8_Click(object sender, EventArgs e)
