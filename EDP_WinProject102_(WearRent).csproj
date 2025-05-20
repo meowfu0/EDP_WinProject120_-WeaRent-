@@ -131,6 +131,12 @@
     <Compile Include="frmAddCategories.Designer.cs">
       <DependentUpon>frmAddCategories.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmAddClothes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddClothes.Designer.cs">
+      <DependentUpon>frmAddClothes.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmAddLenders.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -172,6 +178,12 @@
     </Compile>
     <Compile Include="frmEditCategories.Designer.cs">
       <DependentUpon>frmEditCategories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEditClothes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditClothes.Designer.cs">
+      <DependentUpon>frmEditClothes.cs</DependentUpon>
     </Compile>
     <Compile Include="frmEditLender.cs">
       <SubType>Form</SubType>
@@ -237,6 +249,9 @@
     <EmbeddedResource Include="frmAddCategories.resx">
       <DependentUpon>frmAddCategories.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmAddClothes.resx">
+      <DependentUpon>frmAddClothes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmAddLenders.resx">
       <DependentUpon>frmAddLenders.cs</DependentUpon>
     </EmbeddedResource>
@@ -257,6 +272,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmEditCategories.resx">
       <DependentUpon>frmEditCategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEditClothes.resx">
+      <DependentUpon>frmEditClothes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmEditLender.resx">
       <DependentUpon>frmEditLender.cs</DependentUpon>
