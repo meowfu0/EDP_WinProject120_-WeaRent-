@@ -173,7 +173,7 @@ namespace EDP_WinProject102__WearRent_
             {
                 MySqlDataReader reader = db.ExecuteSelectQuery(cmd);
 
-                dataGridView1.Rows.Clear(); // Clear existing rows
+                dataGridView1.Rows.Clear(); 
 
                 int rowCount = 0;
                 while (reader.Read())
@@ -185,7 +185,6 @@ namespace EDP_WinProject102__WearRent_
                     DateTime orderDate = string.IsNullOrEmpty(orderDateStr) ? DateTime.MinValue : Convert.ToDateTime(orderDateStr);
                     DateTime returnDate = string.IsNullOrEmpty(returnDateStr) ? DateTime.MinValue : Convert.ToDateTime(returnDateStr);
 
-                    // Add the row to DataGridView
                     dataGridView1.Rows.Add(
                         reader["renter_name"].ToString(),
                         reader["clothes_name"].ToString(),
@@ -213,6 +212,63 @@ namespace EDP_WinProject102__WearRent_
                 MessageBox.Show("Error loading orders data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void SearchOrdersData(string searchKeyword)
+        {
+            string query = "SELECT renter_name, clothes_name, order_date, return_date, lender_name, quantity, rental_price, total_price, payment_status FROM orders WHERE deleted_at IS NULL";
+            if (!string.IsNullOrEmpty(searchKeyword))
+            {
+                query += " AND (renter_name LIKE @search OR clothes_name LIKE @search OR lender_name LIKE @search OR payment_status LIKE @search)";
+            }
+
+            DatabaseConnection db = new DatabaseConnection();
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@search", "%" + searchKeyword + "%");
+
+            try
+            {
+                MySqlDataReader reader = db.ExecuteSelectQuery(cmd);
+
+                dataGridView1.Rows.Clear(); // Clear existing rows
+
+                int rowCount = 0;
+                while (reader.Read())
+                {
+                    string orderDateStr = reader["order_date"].ToString();
+                    string returnDateStr = reader["return_date"].ToString();
+
+                    DateTime orderDate = string.IsNullOrEmpty(orderDateStr) ? DateTime.MinValue : Convert.ToDateTime(orderDateStr);
+                    DateTime returnDate = string.IsNullOrEmpty(returnDateStr) ? DateTime.MinValue : Convert.ToDateTime(returnDateStr);
+
+                    // Add the row to DataGridView
+                    dataGridView1.Rows.Add(
+                        reader["renter_name"].ToString(),
+                        reader["clothes_name"].ToString(),
+                        orderDate == DateTime.MinValue ? "" : orderDate.ToString("yyyy-MM-dd"),
+                        returnDate == DateTime.MinValue ? "" : returnDate.ToString("yyyy-MM-dd"),
+                        reader["lender_name"].ToString(),
+                        reader["quantity"].ToString(),
+                        reader["rental_price"].ToString(),
+                        reader["total_price"].ToString(),
+                        reader["payment_status"].ToString()
+                    );
+
+                    rowCount++;
+                }
+
+                if (rowCount == 0)
+                {
+                    MessageBox.Show("No records found in the database matching the criteria.", "No Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                AddActionButtonsToDataGridView();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading orders data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
@@ -347,17 +403,15 @@ namespace EDP_WinProject102__WearRent_
 
         private void button12_Click(object sender, EventArgs e)
         {
-            // Create and show the Date Filter Form (frmDateFilter)
             frmDateFilter dateFilterForm = new frmDateFilter();
-            dateFilterForm.Owner = this;  // Set this form as the parent form
+            dateFilterForm.Owner = this;  
             dateFilterForm.StartPosition = FormStartPosition.CenterScreen;
-            dateFilterForm.ShowDialog();  // Show the form as a modal
+            dateFilterForm.ShowDialog();  
         }
 
 
         public void ExportOrdersToExcel(DateTime startDate, DateTime endDate)
         {
-            // Access dataGridView1 directly
             var dataGridView = dataGridView1;
 
             string ordersDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "OrdersData");
@@ -383,7 +437,6 @@ namespace EDP_WinProject102__WearRent_
                 DateTime orderDate = Convert.ToDateTime(dgvRow.Cells["colOrderDate"].Value);
                 DateTime returnDate = Convert.ToDateTime(dgvRow.Cells["colReturnDate"].Value);
 
-                // Apply the date filtering
                 if (orderDate >= startDate && returnDate <= endDate)
                 {
                     worksheet.Cells[row, 3].Value = dgvRow.Cells["colRenterName"].Value.ToString();
@@ -408,6 +461,25 @@ namespace EDP_WinProject102__WearRent_
             Marshal.ReleaseComObject(excelApp);
         }
 
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            string searchKeyword = textBox1.Text.Trim();
+            LoadOrdersData(searchKeyword);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            string searchKeyword = textBox1.Text.Trim();
+
+            if (string.IsNullOrEmpty(searchKeyword))
+            {
+                LoadOrdersData();  
+            }
+            else
+            {
+                SearchOrdersData(searchKeyword);  
+            }
+        }
 
     }
 }

@@ -27,6 +27,8 @@ namespace EDP_WinProject102__WearRent_
         private void frmDashboard_Load(object sender, EventArgs e)
         {
             LoadTotalUsersCount();
+            LoadRentersData();
+            LoadTotalOrdersCount();
             LoadTotalClothesCount();
             LoadTotalLendersCount();
             LoadTotalRentersCount();
@@ -87,11 +89,6 @@ namespace EDP_WinProject102__WearRent_
             frmDashboard dashboard = new frmDashboard();
             dashboard.Show();
             this.Hide();
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -458,6 +455,76 @@ namespace EDP_WinProject102__WearRent_
         private void label5_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void LoadTotalOrdersCount()
+        {
+            string query = "SELECT COUNT(*) FROM orders WHERE deleted_at IS NULL";
+            DatabaseConnection db = new DatabaseConnection();
+            MySqlCommand cmd = new MySqlCommand(query);
+
+            try
+            {
+                object result = db.ExecuteScalarQuery(cmd);
+                int count = 0;
+                if (result != null && int.TryParse(result.ToString(), out count))
+                {
+                    label8.Text = count.ToString();  // Set the label with the total order count
+                }
+                else
+                {
+                    label8.Text = "0";  // In case the result is invalid
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to load orders count: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                label8.Text = "0";  // Set label to 0 if an error occurs
+            }
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+        private void LoadRentersData()
+        {
+            string query = "SELECT renters_name, email_address, phone_number, address FROM customers WHERE deleted_at IS NULL";
+
+
+            DatabaseConnection db = new DatabaseConnection();
+            MySqlCommand cmd = new MySqlCommand(query);
+
+            try
+            {
+                MySqlDataReader reader = db.ExecuteSelectQuery(cmd);
+                dataGridView1.Rows.Clear(); // Clear any existing data
+
+                while (reader.Read())
+                {
+                    dataGridView1.Rows.Add(
+                        reader["renters_name"].ToString(),
+                        reader["email_address"].ToString(),
+                        reader["phone_number"].ToString(),
+                        reader["address"].ToString()
+                    );
+                }
+                dataGridView1.ClearSelection();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading renters data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
     }

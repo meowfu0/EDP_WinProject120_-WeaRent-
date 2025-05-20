@@ -339,8 +339,49 @@ namespace EDP_WinProject102__WearRent_
 
         private void button7_Click(object sender, EventArgs e)
         {
-
+            string searchKeyword = textBox1.Text.Trim();
+            if (string.IsNullOrEmpty(searchKeyword))
+            {
+                LoadLendersData();
+            }
+            else
+            {
+                SearchLendersData(searchKeyword);
+            }
         }
+
+        private void SearchLendersData(string searchKeyword)
+        {
+            string query = "SELECT lenders_name, email_address, phone_number, address FROM lenders WHERE deleted_at IS NULL";
+            if (!string.IsNullOrEmpty(searchKeyword))
+            {
+                query += " AND (lenders_name LIKE @search OR email_address LIKE @search OR phone_number LIKE @search OR address LIKE @search)";
+            }
+
+            DatabaseConnection db = new DatabaseConnection();
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@search", "%" + searchKeyword + "%");
+
+            try
+            {
+                MySqlDataReader reader = db.ExecuteSelectQuery(cmd);
+                dataGridView1.Rows.Clear();
+                while (reader.Read())
+                {
+                    dataGridView1.Rows.Add(
+                        reader["lenders_name"].ToString(),
+                        reader["email_address"].ToString(),
+                        reader["phone_number"].ToString(),
+                        reader["address"].ToString()
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading lenders data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {

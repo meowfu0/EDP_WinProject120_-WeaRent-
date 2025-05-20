@@ -308,7 +308,7 @@ namespace EDP_WinProject102__WearRent_
                         reader["category_name"].ToString()
                     );
                 }
-                dataGridView1.ClearSelection();  
+                dataGridView1.ClearSelection();
 
                 AddActionButtonsToDataGridView();
             }
@@ -356,7 +356,8 @@ namespace EDP_WinProject102__WearRent_
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
+            string searchKeyword = textBox1.Text.Trim();
+            LoadCategoriesData(searchKeyword);
         }
 
         private void button12_Click(object sender, EventArgs e)
@@ -416,6 +417,51 @@ namespace EDP_WinProject102__WearRent_
             Marshal.ReleaseComObject(worksheet);
             Marshal.ReleaseComObject(workbook);
             Marshal.ReleaseComObject(excelApp);
+        }
+
+        private void button8_Click_1(object sender, EventArgs e)
+        {
+            string searchKeyword = textBox1.Text.Trim();
+
+            if (string.IsNullOrEmpty(searchKeyword))
+            {
+                LoadCategoriesData();  // If search keyword is empty, load all categories data
+            }
+            else
+            {
+                SearchCategoriesData(searchKeyword);  // If search keyword is not empty, filter the categories data
+            }
+        }
+        private void SearchCategoriesData(string searchKeyword)
+        {
+            string query = "SELECT category_name FROM categories WHERE deleted_at IS NULL";
+            if (!string.IsNullOrEmpty(searchKeyword))
+            {
+                query += " AND category_name LIKE @search";
+            }
+
+            DatabaseConnection db = new DatabaseConnection();
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@search", "%" + searchKeyword + "%");
+
+            try
+            {
+                MySqlDataReader reader = db.ExecuteSelectQuery(cmd);
+                dataGridView1.Rows.Clear();
+                while (reader.Read())
+                {
+                    dataGridView1.Rows.Add(
+                        reader["category_name"].ToString()
+                    );
+                }
+                dataGridView1.ClearSelection();
+
+                AddActionButtonsToDataGridView();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading categories data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
     }

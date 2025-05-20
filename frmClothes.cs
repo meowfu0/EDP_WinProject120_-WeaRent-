@@ -425,12 +425,57 @@ namespace EDP_WinProject102__WearRent_
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
+            string searchKeyword = textBox1.Text.Trim();
+            LoadClothesData(searchKeyword);
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
+            string searchKeyword = textBox1.Text.Trim();
 
+            if (string.IsNullOrEmpty(searchKeyword))
+            {
+                LoadClothesData();  
+            }
+            else
+            {
+                SearchClothesData(searchKeyword); 
+            }
+        }
+
+
+        private void SearchClothesData(string searchKeyword)
+        {
+            string query = "SELECT name, size, color, rental_price, category_name, lender_name FROM clothes WHERE deleted_at IS NULL";
+            if (!string.IsNullOrEmpty(searchKeyword))
+            {
+                query += " AND (name LIKE @search OR size LIKE @search OR color LIKE @search OR category_name LIKE @search OR lender_name LIKE @search)";
+            }
+
+            DatabaseConnection db = new DatabaseConnection();
+            MySqlCommand cmd = new MySqlCommand(query);
+            cmd.Parameters.AddWithValue("@search", "%" + searchKeyword + "%");
+
+            try
+            {
+                MySqlDataReader reader = db.ExecuteSelectQuery(cmd);
+                dataGridView1.Rows.Clear();
+                while (reader.Read())
+                {
+                    dataGridView1.Rows.Add(
+                        reader["name"].ToString(),
+                        reader["size"].ToString(),
+                        reader["color"].ToString(),
+                        reader["rental_price"].ToString(),
+                        reader["category_name"].ToString(),
+                        reader["lender_name"].ToString()
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading clothes data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void label4_Click(object sender, EventArgs e)
