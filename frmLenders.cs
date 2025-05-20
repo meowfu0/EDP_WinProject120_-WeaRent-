@@ -261,19 +261,17 @@ namespace EDP_WinProject102__WearRent_
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0) // Ensure it's not a header row
+            if (e.RowIndex >= 0)
             {
                 if (dataGridView1.Columns[e.ColumnIndex].Name == "Edit")
                 {
-                    // Retrieve data from the selected row
                     string lendersName = dataGridView1.Rows[e.RowIndex].Cells["colLenderName"].Value.ToString();
                     string emailAddress = dataGridView1.Rows[e.RowIndex].Cells["colEmail"].Value.ToString();
                     string phoneNumber = dataGridView1.Rows[e.RowIndex].Cells["colPhone"].Value.ToString();
                     string address = dataGridView1.Rows[e.RowIndex].Cells["colAddress"].Value.ToString();
 
-                    // Create a new instance of frmEditLender and pass the data to its constructor
                     frmEditLender editLenderForm = new frmEditLender(lendersName, emailAddress, phoneNumber, address);
-                    editLenderForm.StartPosition = FormStartPosition.CenterScreen; // Center the form
+                    editLenderForm.StartPosition = FormStartPosition.CenterScreen; 
                     editLenderForm.Show();
                 }
 
@@ -310,9 +308,9 @@ namespace EDP_WinProject102__WearRent_
             try
             {
                 db.ExecuteQuery(cmd);
-                dataGridView1.Rows.RemoveAt(rowIndex);  // Remove the row from the DataGridView
+                dataGridView1.Rows.RemoveAt(rowIndex); 
                 MessageBox.Show("Lender deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadLendersData();  // Reload the lenders data after deletion
+                LoadLendersData(); 
             }
             catch (Exception ex)
             {
@@ -321,11 +319,8 @@ namespace EDP_WinProject102__WearRent_
         }
         private void button9_Click(object sender, EventArgs e)
         {
-            // Open the form to add a lender
             frmAddLenders addLenderForm = new frmAddLenders();
             addLenderForm.ShowDialog();
-
-            // Reload the lender data to reflect the newly added lender
             LoadLendersData();
         }
 
@@ -354,33 +349,28 @@ namespace EDP_WinProject102__WearRent_
         }
         private void ExportToExistingExcel()
         {
-            // Set the folder and image path for Lenders
             string lendersDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "LendersData");
             string filePath = Path.Combine(lendersDataFolder, "LendersTemplate.xlsx");
             string imagePath = Path.Combine(lendersDataFolder, "image1.png");
 
-            // Check if the image file exists
             if (!File.Exists(imagePath))
             {
                 MessageBox.Show("Image file not found: " + imagePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;  // Stop further execution if the image file doesn't exist
+                return;  
             }
 
-            // Start Excel application
             Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
             excelApp.Visible = true;
 
             Workbook workbook = excelApp.Workbooks.Open(filePath);
-            Worksheet worksheet = workbook.Sheets[1];  // Select the first sheet
+            Worksheet worksheet = workbook.Sheets[1];  
 
-            // Get the range where the picture will be placed
             Range mergedRange = worksheet.Range["A1:B5"];
             double top = mergedRange.Top;
             double left = mergedRange.Left;
             double width = mergedRange.Width;
             double height = mergedRange.Height;
 
-            // Add the image to the worksheet
             try
             {
                 worksheet.Shapes.AddPicture(imagePath,
@@ -391,14 +381,13 @@ namespace EDP_WinProject102__WearRent_
             catch (Exception ex)
             {
                 MessageBox.Show("Error adding image: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;  // Stop further execution if there's an error adding the image
+                return;  
             }
 
-            // Write the data from DataGridView into the worksheet
             int row = 6;
             foreach (DataGridViewRow dgvRow in dataGridView1.Rows)
             {
-                if (dgvRow.IsNewRow) continue;  // Skip the new row if present
+                if (dgvRow.IsNewRow) continue;  
 
                 worksheet.Cells[row, 3].Value = dgvRow.Cells["colLenderName"].Value.ToString();
                 worksheet.Cells[row, 4].Value = dgvRow.Cells["colEmail"].Value.ToString();
@@ -407,13 +396,9 @@ namespace EDP_WinProject102__WearRent_
                 row++;
             }
 
-            // Save the workbook
             workbook.Save();
-
-            // Inform the user that the export is complete
             MessageBox.Show("Lenders data has been exported to the existing Excel file!", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            // Cleanup
             excelApp.Quit();
             Marshal.ReleaseComObject(worksheet);
             Marshal.ReleaseComObject(workbook);

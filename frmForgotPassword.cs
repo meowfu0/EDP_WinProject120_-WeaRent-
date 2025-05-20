@@ -84,10 +84,9 @@ namespace EDP_WinProject102__WearRent_
                     Credentials = new NetworkCredential(smtpUser, smtpPassword),  
                     EnableSsl = true
                 };
-                // Prepare the email message with HTML content
                 MailMessage mailMessage = new MailMessage
                 {
-                    From = new MailAddress(smtpUser),  // Use the sending email
+                    From = new MailAddress(smtpUser),  
                     Subject = "Password Reset Request",
                     Body = $@"
         <html>
@@ -108,32 +107,24 @@ namespace EDP_WinProject102__WearRent_
         </body>
         </html>
     ",
-                    IsBodyHtml = true, // Set to true to send HTML-formatted emails
+                    IsBodyHtml = true, 
                 };
 
-
-                // Send to the user's email address
-                mailMessage.To.Add(userEmail); // userEmail is the email entered by the user
-
-                // Send the email
+                mailMessage.To.Add(userEmail); 
                 smtpClient.Send(mailMessage);
-
-                // Store the reset code and expiration timestamp in the database
                 string query = "UPDATE users SET reset_code = @resetCode, reset_code_expiration = NOW() + INTERVAL 15 MINUTE WHERE email_address = @userEmail";
                 DatabaseConnection db = new DatabaseConnection();
                 MySqlCommand cmd = new MySqlCommand(query);
                 cmd.Parameters.AddWithValue("@resetCode", resetCode);
                 cmd.Parameters.AddWithValue("@userEmail", userEmail);
 
-                db.ExecuteQuery(cmd); // Execute the query to update the reset code and expiration time in the database
+                db.ExecuteQuery(cmd);
 
-                // Inform the user that the email has been sent
                 MessageBox.Show("A reset code has been sent to your email. Please check your inbox.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Proceed to the form where the user will enter the reset code
-                frmSetCode setCodeForm = new frmSetCode();  // Create the verification form
-                setCodeForm.Show();  // Show the form to enter the code
-                this.Hide();  // Hide the current form (Forgot Password form)
+                frmSetCode setCodeForm = new frmSetCode();  
+                setCodeForm.Show();  
+                this.Hide();  
             }
             catch (Exception ex)
             {
@@ -143,16 +134,14 @@ namespace EDP_WinProject102__WearRent_
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string email = textBox1.Text; // Get the entered email
+            string email = textBox1.Text; 
 
-            // Check if email is empty
             if (string.IsNullOrEmpty(email))
             {
                 MessageBox.Show("Please enter your email address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Check if the email exists in the database
             string query = "SELECT COUNT(*) FROM users WHERE email_address = @email";
             DatabaseConnection db = new DatabaseConnection();
             MySqlCommand cmd = new MySqlCommand(query);
@@ -164,17 +153,13 @@ namespace EDP_WinProject102__WearRent_
 
                 if (reader != null && reader.Read() && reader.GetInt32(0) > 0)
                 {
-                    // Email exists, send reset code to email
-                    SendResetCode(email); // This will send the reset code to the user's email
-
-                    // Pass the email to the next form (frmSetCode)
-                    frmSetCode setCodeForm = new frmSetCode(email);  // Pass the email to frmSetCode
+                    SendResetCode(email); 
+                    frmSetCode setCodeForm = new frmSetCode(email);  
                     setCodeForm.Show();
-                    this.Hide(); // Hide the current form (Forgot Password form)
+                    this.Hide(); 
                 }
                 else
                 {
-                    // If email does not exist, show an error message
                     MessageBox.Show("No account found with that email address. Please check and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }

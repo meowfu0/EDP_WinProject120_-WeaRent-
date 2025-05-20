@@ -15,7 +15,7 @@ namespace EDP_WinProject102__WearRent_
 {
     public partial class frmSetCode : Form
     {
-        private string userEmail;  // Store the email passed from the previous form
+        private string userEmail;  
         public frmSetCode()
         {
             InitializeComponent();
@@ -23,7 +23,7 @@ namespace EDP_WinProject102__WearRent_
         public frmSetCode(string email)
         {
             InitializeComponent();
-            userEmail = email;  // Store the email
+            userEmail = email; 
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -65,21 +65,16 @@ namespace EDP_WinProject102__WearRent_
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // Get the entered code from the textbox
-            string enteredCode = GetEnteredCode();  // Assume this is getting the entered code correctly
-
-            // Ensure that the entered code has exactly 5 digits
+            string enteredCode = GetEnteredCode();  
             if (enteredCode.Length != 5)
             {
                 MessageBox.Show("Please enter a valid 5-digit code.", "Invalid Code", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            // Check the reset code in the database
             string query = "SELECT reset_code, email_address FROM users WHERE reset_code = @resetCode";
             DatabaseConnection db = new DatabaseConnection();
             MySqlCommand cmd = new MySqlCommand(query);
-            cmd.Parameters.AddWithValue("@resetCode", enteredCode);  // Compare the entered code
+            cmd.Parameters.AddWithValue("@resetCode", enteredCode);  
 
             try
             {
@@ -87,11 +82,8 @@ namespace EDP_WinProject102__WearRent_
 
                 if (reader != null && reader.Read())
                 {
-                    // If the reset code matches, retrieve the email
-                    string userEmail = reader["email_address"].ToString();  // Get the email address associated with the reset code
-
-                    // Now pass the email to frmSetNewPass to reset the password
-                    frmSetNewPass setNewPassForm = new frmSetNewPass(userEmail);  // Pass the email to the next form
+                    string userEmail = reader["email_address"].ToString();  
+                    frmSetNewPass setNewPassForm = new frmSetNewPass(userEmail); 
                     setNewPassForm.Show();
                     this.Hide();  
                 }

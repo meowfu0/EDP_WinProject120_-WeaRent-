@@ -382,33 +382,27 @@ namespace EDP_WinProject102__WearRent_
         }
         private void ExportToExistingExcel()
         {
-            // Set the folder and image path
             string rentersDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "RentersData");
             string filePath = Path.Combine(rentersDataFolder, "RentersTemplate.xlsx");
             string imagePath = Path.Combine(rentersDataFolder, "image1.png");
-
-            // Check if the image file exists
             if (!File.Exists(imagePath))
             {
                 MessageBox.Show("Image file not found: " + imagePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;  // Stop further execution if the image file doesn't exist
+                return;  
             }
 
-            // Start Excel application
             Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
             excelApp.Visible = true;
 
             Workbook workbook = excelApp.Workbooks.Open(filePath);
             Worksheet worksheet = workbook.Sheets[1];
 
-            // Get the range where the picture will be placed
             Range mergedRange = worksheet.Range["A1:B5"];
             double top = mergedRange.Top;
             double left = mergedRange.Left;
             double width = mergedRange.Width;
             double height = mergedRange.Height;
 
-            // Add the image to the worksheet
             try
             {
                 worksheet.Shapes.AddPicture(imagePath, Microsoft.Office.Core.MsoTriState.msoFalse,
@@ -417,14 +411,13 @@ namespace EDP_WinProject102__WearRent_
             catch (Exception ex)
             {
                 MessageBox.Show("Error adding image: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; // Stop further execution if there's an error adding the image
+                return; 
             }
 
-            // Write the data from DataGridView into the worksheet
             int row = 6;
             foreach (DataGridViewRow dgvRow in dataGridView1.Rows)
             {
-                if (dgvRow.IsNewRow) continue;  // Skip the new row if present
+                if (dgvRow.IsNewRow) continue;  
 
                 worksheet.Cells[row, 3].Value = dgvRow.Cells["colRenterName"].Value.ToString();
                 worksheet.Cells[row, 4].Value = dgvRow.Cells["colEmail"].Value.ToString();
@@ -433,13 +426,8 @@ namespace EDP_WinProject102__WearRent_
                 row++;
             }
 
-            // Save the workbook
             workbook.Save();
-
-            // Inform the user that the export is complete
             MessageBox.Show("Renters data has been exported to the existing Excel file!", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Cleanup
             excelApp.Quit();
             Marshal.ReleaseComObject(worksheet);
             Marshal.ReleaseComObject(workbook);
