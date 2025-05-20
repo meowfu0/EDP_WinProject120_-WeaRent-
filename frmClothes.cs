@@ -64,7 +64,6 @@ namespace EDP_WinProject102__WearRent_
 
         private void LoadClothesData(string searchKeyword = "")
         {
-            // SQL query to fetch clothes data, including fields like name, size, color, rental price, category name, and lender name
             string query = "SELECT name, size, color, rental_price, category_name, lender_name FROM clothes WHERE deleted_at IS NULL";
             if (!string.IsNullOrEmpty(searchKeyword))
             {
@@ -81,7 +80,6 @@ namespace EDP_WinProject102__WearRent_
                 dataGridView1.Rows.Clear();
                 while (reader.Read())
                 {
-                    // Adding data to DataGridView
                     dataGridView1.Rows.Add(
                         reader["name"].ToString(),
                         reader["size"].ToString(),
@@ -92,7 +90,7 @@ namespace EDP_WinProject102__WearRent_
                     );
                 }
 
-                AddActionButtonsToDataGridView();  // Add Edit/Delete buttons after loading the data
+                AddActionButtonsToDataGridView(); 
             }
             catch (Exception ex)
             {
@@ -300,11 +298,10 @@ namespace EDP_WinProject102__WearRent_
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0) // Ensure it's not a header row
+            if (e.RowIndex >= 0)
             {
                 if (dataGridView1.Columns[e.ColumnIndex].Name == "Edit")
                 {
-                    // Retrieve data from the selected row
                     string clothesName = dataGridView1.Rows[e.RowIndex].Cells["colClothesName"].Value.ToString();
                     string size = dataGridView1.Rows[e.RowIndex].Cells["colSize"].Value.ToString();
                     string color = dataGridView1.Rows[e.RowIndex].Cells["colColor"].Value.ToString();
@@ -312,9 +309,8 @@ namespace EDP_WinProject102__WearRent_
                     string category = dataGridView1.Rows[e.RowIndex].Cells["colCategory"].Value.ToString();
                     string lenderName = dataGridView1.Rows[e.RowIndex].Cells["colLenderName"].Value.ToString();
 
-                    // Create a new instance of frmEditClothes and pass the data to its constructor
                     frmEditClothes editClothesForm = new frmEditClothes(clothesName, size, color, rentalPrice, category, lenderName);
-                    editClothesForm.StartPosition = FormStartPosition.CenterScreen; // Center the form
+                    editClothesForm.StartPosition = FormStartPosition.CenterScreen; 
                     editClothesForm.Show();
                 }
 
@@ -343,9 +339,9 @@ namespace EDP_WinProject102__WearRent_
             try
             {
                 db.ExecuteQuery(cmd);
-                dataGridView1.Rows.RemoveAt(rowIndex);  // Remove the row from the DataGridView
+                dataGridView1.Rows.RemoveAt(rowIndex); 
                 MessageBox.Show("Clothes item deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadClothesData();  // Reload the clothes data after deletion
+                LoadClothesData(); 
             }
             catch (Exception ex)
             {
@@ -360,12 +356,10 @@ namespace EDP_WinProject102__WearRent_
 
         private void button9_Click(object sender, EventArgs e)
         {
-            // Open the form to add a new clothes item
             frmAddClothes addClothesForm = new frmAddClothes();
             addClothesForm.ShowDialog();
 
-            // Reload the clothes data to reflect the newly added clothes item
-            LoadClothesData();  // This will reload the DataGridView with the updated list
+            LoadClothesData();  
         }
 
         private void button12_Click(object sender, EventArgs e)
@@ -374,33 +368,26 @@ namespace EDP_WinProject102__WearRent_
         }
         private void ExportToExistingExcel()
         {
-            // Set the folder and file path for Clothes
             string clothesDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "ClothesData");
             string filePath = Path.Combine(clothesDataFolder, "ClothesTemplate.xlsx");
-            string imagePath = Path.Combine(clothesDataFolder, "image1.png"); // Optional image, if needed
-
-            // Check if the image file exists
+            string imagePath = Path.Combine(clothesDataFolder, "image1.png"); 
             if (!File.Exists(imagePath))
             {
                 MessageBox.Show("Image file not found: " + imagePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;  // Stop further execution if the image file doesn't exist
+                return;  
             }
 
-            // Start Excel application
             Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
             excelApp.Visible = true;
 
             Workbook workbook = excelApp.Workbooks.Open(filePath);
-            Worksheet worksheet = workbook.Sheets[1];  // Select the first sheet
-
-            // Get the range where the picture will be placed (optional, can remove if not needed)
+            Worksheet worksheet = workbook.Sheets[1]; 
             Range mergedRange = worksheet.Range["A1:B5"];
             double top = mergedRange.Top;
             double left = mergedRange.Left;
             double width = mergedRange.Width;
             double height = mergedRange.Height;
 
-            // Add the image to the worksheet (optional)
             try
             {
                 worksheet.Shapes.AddPicture(imagePath,
@@ -411,22 +398,20 @@ namespace EDP_WinProject102__WearRent_
             catch (Exception ex)
             {
                 MessageBox.Show("Error adding image: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;  // Stop further execution if there's an error adding the image
+                return;  
             }
 
-            // Write the data from DataGridView into the worksheet starting from row 6
-            int row = 6;  // Starting row for data
+            int row = 6;  
             foreach (DataGridViewRow dgvRow in dataGridView1.Rows)
             {
-                if (dgvRow.IsNewRow) continue;  // Skip the new row if present
+                if (dgvRow.IsNewRow) continue;  
 
-                // Update columns as per your Excel file structure:
-                worksheet.Cells[row, 3].Value = dgvRow.Cells["colClothesName"].Value.ToString();  // Clothes Name (Column C)
-                worksheet.Cells[row, 4].Value = dgvRow.Cells["colSize"].Value.ToString();          // Size (Column D)
-                worksheet.Cells[row, 5].Value = dgvRow.Cells["colColor"].Value.ToString();         // Color (Column E)
-                worksheet.Cells[row, 6].Value = dgvRow.Cells["colRentalPrice"].Value.ToString();   // Rental Price (Column F)
-                worksheet.Cells[row, 7].Value = dgvRow.Cells["colCategory"].Value.ToString();      // Category (Column G)
-                worksheet.Cells[row, 8].Value = dgvRow.Cells["colLenderName"].Value.ToString();    // Lender Name (Column H)
+                worksheet.Cells[row, 3].Value = dgvRow.Cells["colClothesName"].Value.ToString();  
+                worksheet.Cells[row, 4].Value = dgvRow.Cells["colSize"].Value.ToString();          
+                worksheet.Cells[row, 5].Value = dgvRow.Cells["colColor"].Value.ToString();        
+                worksheet.Cells[row, 6].Value = dgvRow.Cells["colRentalPrice"].Value.ToString();   
+                worksheet.Cells[row, 7].Value = dgvRow.Cells["colCategory"].Value.ToString();      
+                worksheet.Cells[row, 8].Value = dgvRow.Cells["colLenderName"].Value.ToString();   
                 row++;
             }
 

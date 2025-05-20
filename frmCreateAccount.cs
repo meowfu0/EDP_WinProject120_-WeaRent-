@@ -41,23 +41,19 @@ namespace EDP_WinProject102__WearRent_
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // Capture the input data from the form
-            string name = textBox3.Text; // Name
-            string birthday = dateTimePicker2.Value.ToString("yyyy-MM-dd"); // Birthday
-            string email = textBox4.Text; // Email
-            string phoneNumber = textBox1.Text; // Phone Number
-            string password = textBox2.Text; // Password
+            string name = textBox3.Text; 
+            string birthday = dateTimePicker2.Value.ToString("yyyy-MM-dd"); 
+            string email = textBox4.Text;
+            string phoneNumber = textBox1.Text;
+            string password = textBox2.Text; 
 
-            // Check if any required field is empty
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(birthday) || string.IsNullOrEmpty(email) ||
                 string.IsNullOrEmpty(phoneNumber) || string.IsNullOrEmpty(password))
             {
-                // Show an error message if any field is empty
                 MessageBox.Show("Please fill in all the fields to create an account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; // Stop further execution if fields are empty
+                return; 
             }
 
-            // Check if the email or phone number already exists in the database
             string queryCheck = "SELECT COUNT(*) FROM users WHERE email_address = @email OR phone_number = @phone";
             DatabaseConnection dbCheck = new DatabaseConnection();
             MySqlCommand cmdCheck = new MySqlCommand(queryCheck);
@@ -70,19 +66,15 @@ namespace EDP_WinProject102__WearRent_
 
                 if (readerCheck != null && readerCheck.Read() && readerCheck.GetInt32(0) > 0)
                 {
-                    // Show error message if email or phone number already exists
                     MessageBox.Show("This email or phone number is already in use. Please use a different one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Hash the password
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
-                // SQL query to insert the data into the users table
                 string query = "INSERT INTO users (name, birthday, email_address, phone_number, password_hash, created_at, modified_at) " +
                                "VALUES (@name, @birthday, @email, @phone, @password, NOW(), NOW())";
 
-                // Create a connection and execute the query
                 DatabaseConnection db = new DatabaseConnection();
                 MySqlCommand cmd = new MySqlCommand(query);
                 cmd.Parameters.AddWithValue("@name", name);
@@ -91,9 +83,8 @@ namespace EDP_WinProject102__WearRent_
                 cmd.Parameters.AddWithValue("@phone", phoneNumber);
                 cmd.Parameters.AddWithValue("@password", hashedPassword);
 
-                db.ExecuteQuery(cmd); // Execute the query to insert data into the table
+                db.ExecuteQuery(cmd); 
 
-                // Notify user of successful account creation
                 DialogResult result = MessageBox.Show(
                     "Account Successfully Created",
                     "Success",
@@ -103,10 +94,9 @@ namespace EDP_WinProject102__WearRent_
 
                 if (result == DialogResult.OK)
                 {
-                    // Open login form
                     frmLogin loginForm = new frmLogin();
                     loginForm.Show();
-                    this.Hide(); // Hide current form
+                    this.Hide(); 
                 }
             }
             catch (Exception ex)

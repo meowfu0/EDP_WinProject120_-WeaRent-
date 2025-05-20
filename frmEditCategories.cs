@@ -13,19 +13,17 @@ namespace EDP_WinProject102__WearRent_
 {
     public partial class frmEditCategories : Form
     {
-        private string categoryName; // Store the category name
+        private string categoryName; 
 
-        // Constructor to accept categoryName
         public frmEditCategories(string categoryName)
         {
             InitializeComponent();
-            this.categoryName = categoryName;  // Store the category name
-            textBox1.Text = categoryName; // Display the category name in the TextBox
+            this.categoryName = categoryName;  
+            textBox1.Text = categoryName; 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // Get the updated category name
             string updatedCategoryName = textBox1.Text.Trim();
 
             if (string.IsNullOrEmpty(updatedCategoryName))
@@ -39,14 +37,12 @@ namespace EDP_WinProject102__WearRent_
             DatabaseConnection db = new DatabaseConnection();
             MySqlCommand cmd = new MySqlCommand(query);
             cmd.Parameters.AddWithValue("@category_name", updatedCategoryName);
-            cmd.Parameters.AddWithValue("@original_category_name", categoryName); // Use original category name for WHERE clause
+            cmd.Parameters.AddWithValue("@original_category_name", categoryName); 
 
             try
             {
-                // Execute the query to update the category
                 db.ExecuteQuery(cmd);
 
-                // Update the DataGridView row directly (assuming frmCategorie will reload the data)
                 MessageBox.Show("Category updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }

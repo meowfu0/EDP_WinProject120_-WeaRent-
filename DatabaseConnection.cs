@@ -31,7 +31,6 @@ namespace EDP_WinProject102__WearRent_
             }
         }
 
-        // Close the connection
         public void CloseConnection()
         {
             try
@@ -52,8 +51,8 @@ namespace EDP_WinProject102__WearRent_
             try
             {
                 OpenConnection();
-                cmd.Connection = connection; // Set the connection to the command
-                cmd.ExecuteNonQuery(); // Execute the query
+                cmd.Connection = connection; 
+                cmd.ExecuteNonQuery(); 
                 CloseConnection();
             }
             catch (Exception ex)
@@ -85,8 +84,8 @@ namespace EDP_WinProject102__WearRent_
             try
             {
                 OpenConnection();
-                cmd.Connection = connection; // Set the connection to the command
-                reader = cmd.ExecuteReader(); // Execute the query and get the result
+                cmd.Connection = connection; 
+                reader = cmd.ExecuteReader(); 
             }
             catch (Exception ex)
             {

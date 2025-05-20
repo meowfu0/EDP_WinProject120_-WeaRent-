@@ -21,7 +21,7 @@ namespace EDP_WinProject102__WearRent_
 
         private void ResetSidebar()
         {
-            button4.BackColor = Color.Transparent; // Renters
+            button4.BackColor = Color.Transparent; 
         }
 
         private void frmDashboard_Load(object sender, EventArgs e)
@@ -172,8 +172,8 @@ namespace EDP_WinProject102__WearRent_
 
         private void button4_Click(object sender, EventArgs e)
         {
-            ResetSidebar(); // remove highlight from others
-            button4.BackColor = Color.FromArgb(0, 120, 215); // highlight this one
+            ResetSidebar(); 
+            button4.BackColor = Color.FromArgb(0, 120, 215);
 
             frmRenters rentersForm = new frmRenters();
             rentersForm.Show();
@@ -343,7 +343,7 @@ namespace EDP_WinProject102__WearRent_
 
         private void LoadTotalLendersCount()
         {
-            string query = "SELECT COUNT(*) FROM lenders WHERE deleted_at IS NULL"; // assuming you also have soft delete
+            string query = "SELECT COUNT(*) FROM lenders WHERE deleted_at IS NULL"; 
             DatabaseConnection db = new DatabaseConnection();
             MySqlCommand cmd = new MySqlCommand(query);
 
@@ -368,7 +368,7 @@ namespace EDP_WinProject102__WearRent_
         }
         private void LoadTotalUsersCount()
         {
-            string query = "SELECT COUNT(*) FROM users WHERE deleted_at IS NULL"; // Adjust if no soft delete
+            string query = "SELECT COUNT(*) FROM users WHERE deleted_at IS NULL"; 
             DatabaseConnection db = new DatabaseConnection();
             MySqlCommand cmd = new MySqlCommand(query);
 

@@ -51,15 +51,13 @@ namespace EDP_WinProject102__WearRent_
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // Get the input data from the form fields
-            string clothesName = textBox1.Text;   // Clothes name
-            string size = textBox2.Text;          // Size
-            string color = textBox3.Text;         // Color
-            string rentalPrice = textBox4.Text;   // Rental price
-            string category = textBox5.Text;      // Category
-            string lenderName = textBox6.Text;    // Lender's name
+            string clothesName = textBox1.Text;   
+            string size = textBox2.Text;          
+            string color = textBox3.Text;         
+            string rentalPrice = textBox4.Text;   
+            string category = textBox5.Text;      
+            string lenderName = textBox6.Text;    
 
-            // Validate that the required fields are not empty
             if (string.IsNullOrEmpty(clothesName) || string.IsNullOrEmpty(size) || string.IsNullOrEmpty(color) ||
                 string.IsNullOrEmpty(rentalPrice) || string.IsNullOrEmpty(category) || string.IsNullOrEmpty(lenderName))
             {
@@ -67,11 +65,9 @@ namespace EDP_WinProject102__WearRent_
                 return;
             }
 
-            // SQL query to insert the clothes data into the clothes table
             string query = "INSERT INTO clothes (name, size, color, rental_price, category_name, lender_name) " +
                            "VALUES (@name, @size, @color, @rental_price, @category_name, @lender_name)";
 
-            // Create a new MySqlCommand
             DatabaseConnection db = new DatabaseConnection();
             MySqlCommand cmd = new MySqlCommand(query);
             cmd.Parameters.AddWithValue("@name", clothesName);
@@ -83,18 +79,13 @@ namespace EDP_WinProject102__WearRent_
 
             try
             {
-                // Execute the query to insert the new clothes item into the database
                 db.ExecuteQuery(cmd);
-
-                // Inform the user that the clothes item was added successfully
                 MessageBox.Show("Clothes item added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Close the modal form (frmAddClothes)
                 this.Close();
             }
             catch (Exception ex)
             {
-                // Handle any errors that occur during the database operation
                 MessageBox.Show("Error: " + ex.Message, "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
