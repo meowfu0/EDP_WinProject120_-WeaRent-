@@ -41,7 +41,7 @@ Built using Visual Studio Installer Projects.
 - `setup.exe`
 
 **📂 Output Location:**
-- `EDPProjSetup/Debug/`
+- `EDP_WinProject102_(WearRent) Installer ISS file`
 
 ---
 
