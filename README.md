@@ -66,8 +66,7 @@ The following folders contain the generated reports for each section of the plat
 ---
 
 ## 👨‍💻 Developer
-- **Vicente C. Bercasio II**  
+- **Vicente C. Bercasio II (BSIT 3B)**  
   Bachelor of Science in Information Technology  
-  BSIT 3B
   
 ---
